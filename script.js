@@ -1,27 +1,51 @@
-alert("Bem vindo(a) ao jogo de números");
-
-let numeroMaximo = 100;
-let numeroSecreto = parseInt(Math.random() * numeroMaximo + 1);
-console.log(numeroSecreto);
-let numeroChute;
+let numeroSecreto = gerarNumeroAleatorio();
 let tentativas = 1;
 
-while (numeroChute != numeroSecreto) {
-  numeroChute = prompt(`Digite um número de 1 a ${numeroMaximo}`);
+function exibirTextoNaTela(tag, texto) {
+  let campo = document.querySelector(tag);
+  campo.innerHTML = texto;
+}
 
-  if (numeroChute == numeroSecreto) {
-    break;
+function exibirMensagemInicial() {
+  exibirTextoNaTela("h1", "Jogo do número secreto");
+  exibirTextoNaTela("p", "Escolha um número entre 1 e 10");
+}
+
+exibirMensagemInicial();
+
+function verificarChute() {
+  let chute = document.querySelector("input").value;
+
+  if (chute == numeroSecreto) {
+    exibirTextoNaTela("h1", "Acertou!");
+    let palavraTentativa = tentativas > 1 ? "tentativas" : "tentativa";
+    let mensagemTentativas = `Você descobriu o número secreto com ${tentativas} ${palavraTentativa}!`;
+    exibirTextoNaTela("p", mensagemTentativas);
+    document.getElementById("reiniciar").removeAttribute("disabled");
   } else {
-    if (numeroChute > numeroSecreto) {
-      alert(`O número secreto é menor que ${numeroChute}`);
+    if (chute > numeroSecreto) {
+      exibirTextoNaTela("p", "O número secreto é menor");
     } else {
-      alert(`O número secreto é maior que ${numeroChute}`);
+      exibirTextoNaTela("p", "O número secreto é maior");
     }
     tentativas++;
+    limparCampo();
   }
 }
 
-let palavraTentativa = tentativas > 1 ? "tentativas" : "tentativa";
-alert(
-  `Parabéns, você acertou! o numero secreto era ${numeroSecreto} com ${tentativas} ${palavraTentativa}!`
-);
+function gerarNumeroAleatorio() {
+  return parseInt(Math.random() * 3 + 1);
+}
+
+function limparCampo() {
+  chute = document.querySelector("input");
+  chute.value = "";
+}
+
+function reiniciarJogo() {
+  numeroSecreto = gerarNumeroAleatorio();
+  limparCampo();
+  tentativas = 1;
+  exibirMensagemInicial();
+  document.getElementById("reiniciar").setAttribute("disabled", true);
+}

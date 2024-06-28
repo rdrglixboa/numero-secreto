@@ -8,6 +8,21 @@
 </head>
 
 <body>
+  <div class="container">
+    <div class="container_conteudo">
+      <div class="container_informacoes">
+        <div class="container_texto">
+          <h1>Adivinhe o numero secreto</h1>
+          <p>Escolha um número entre 1 a 10</p>
+        </div>
+        <input type="number" min="1" max="10" class="container_input">
+        <div class="chute container_botoes">
+          <button onclick="verificarChute()" class="container_botao">Chutar</button>
+          <button onclick="reiniciarJogo()" id="reiniciar" class="container_botao">Novo jogo</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="./script.js"></script>
 </body>
